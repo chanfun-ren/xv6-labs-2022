@@ -3,11 +3,14 @@
 # (e.g., LAB=util).  Run make grade to test solution with the lab's
 # grade script (e.g., grade-lab-util).
 
+# 导入配置文件
 -include conf/lab.mk
 
+# 设置变量 K 和 U 指向 kernel 和 user 目录
 K=kernel
 U=user
 
+# 包含默认要编译的 kernel 目标文件 
 OBJS = \
   $K/entry.o \
   $K/kalloc.o \
@@ -188,6 +191,8 @@ UPROGS=\
 	$U/_grind\
 	$U/_wc\
 	$U/_zombie\
+	$U/_sleep\
+	$U/_pingpong\
 
 
 
