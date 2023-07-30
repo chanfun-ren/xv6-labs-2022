@@ -8,8 +8,7 @@ void perror_exit(char* err_msg) {
   exit(-1);
 }
 
-int
-main(int argc, char *argv[])
+int main(int argc, char *argv[])
 {
   int toson_fd[2];
   int toparent_fd[2];
@@ -24,6 +23,9 @@ main(int argc, char *argv[])
   if (pid == -1) { // 
     perror_exit("fork error");
   } else if (pid == 0) { // child process
+    close(toson_fd[1]);
+    close(toparent_fd[0]);
+
     // read from the pipe1
     char buf[BUFFSIZE];
     int rbytes = read(toson_fd[0], buf, sizeof(buf));
@@ -42,6 +44,9 @@ main(int argc, char *argv[])
       perror_exit("write error");
     }
   } else { // parent process
+    close(toson_fd[0]);
+    close(toparent_fd[1]);
+
     // write to son
     char msg[4] = "ping";
     int ret = write(toson_fd[1], msg, sizeof(msg));
